@@ -1,9 +1,9 @@
-setcps 0.56
+setcps 0.60
 
 d1 $ s "bd*4"
 d2 $ s "hh*8"
+d3 $ sound "drum" # n 4
 
 d1 $ silence
 d2 $ silence
-
-d1 $ sound "drum" # n 4
+d3 $ silence
