@@ -42,6 +42,50 @@ Now you can write patterns in `hello.tidal` and they will automatically load whe
 
 If you get module errors, make sure you're running TidalCycles through the nix-shell environment as shown above.
 
+## OSC ASCII Visualizer
+
+This project includes an ASCII visualizer that displays TidalCycles OSC messages in real-time!
+
+### Usage
+
+Make the script executable and run it:
+
+```bash
+chmod +x osc-ascii-viz.py
+python osc-ascii-viz.py
+```
+
+Or with custom settings:
+
+```bash
+# Listen on a different port
+python osc-ascii-viz.py --port 57120
+
+# Listen on specific IP
+python osc-ascii-viz.py --ip 127.0.0.1 --port 6010
+```
+
+### Features
+
+- 🎨 **4 Visualization Modes** (auto-cycles every ~10 seconds):
+  - Waveform - animated sine waves
+  - Bar Graph - activity bars  
+  - Circle - expanding circles based on message activity
+  - Particles - falling particle effects
+
+- 📊 **Real-time OSC Message Log** - shows recent messages at the bottom
+- 🎵 **Sound Display** - shows the current sound/sample being played
+- 🌈 **Colorful ASCII Art** - uses terminal colors for visual appeal
+
+### Controls
+
+- Press `q` or `ESC` to quit
+- Visualization modes auto-cycle
+
+### Requirements
+
+The visualizer uses `oscpy` which is included in the flake. Just make sure you've run `direnv allow` or entered the nix shell.
+
 ## Example Patterns
 
 ```haskell

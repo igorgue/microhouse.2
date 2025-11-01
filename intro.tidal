@@ -1,79 +1,62 @@
 -- Igor Guerrero @igorgue - 2025
 
+
 setcps(126/60/4)
 
 resetCycles
 
-let kick1 = [
-      "bd bd bd bd",
-      "bd bd bd bd",
-      "bd bd bd bd",
-      "bd bd bd bd"]
-
-let kick2 = [
-      "bd bd bd bd",
-      "bd bd bd bd",
-      "bd bd bd bd",
-      "bd bd [bd bd] bd"]
-
-let clap1 = [
-      silence,
-      silence,
-      silence,
-      "~ ~ [cp ~] cp ~ ~"]
-
-let fills1 = [
-      "~ ~ ~ fills:1",
-      "~ ~ ~ fills:5",
-      "~ ~ ~ fills:3",
-      "~ ~ ~ fills:2"]
-
 do
-  d1 $ cat kick2 # lpf 597 # resonance 0.013
+  let kick1 = [
+        "bd bd bd bd",
+        "bd bd bd bd",
+        "bd bd bd bd",
+        "bd bd bd bd"]
+  let kick2 = [
+        "bd bd bd bd",
+        "bd bd bd bd",
+        "bd bd bd bd",
+        "bd bd [bd bd] bd"]
+  let clap1 = [
+        silence,
+        silence,
+        silence,
+        "~ ~ [cp ~] cp ~ ~"]
+  let fills1 = [
+        "~ ~ ~ fills:1",
+        "~ ~ ~ fills:5",
+        "~ ~ ~ fills:3",
+        "~ ~ ~ fills:2"]
+  d1 $ cat kick1 # lpf 597 # resonance 0.013
   d2 $ stack [
         s "~ cp ~ cp" # amp 0.14,
         swing 3 $ s "hh*8" # amp 0.16]
-  d3 $ cat clap1 # cutoff 1027 # amp 0.13 # room 0.5 # sz 0.90
+  d3 $ cat clap1 # cutoff 1027 # amp 0.0 # room 0.5 # sz 0.90
   d4 $ s "~ linnhats:2 ~ linnhats:2 ~ linnhats:2 ~ linnhats:2" # amp 0.19 # release 0.168
   d5 $ s "[~ db:10 ~ db:10]*2 db:10*3" # amp 0.17 # gain 0.85 # pan (rand)
-  d6 $ every 4 (# speed 1.1) $ s "~ ~ ~ ~ ~ tabla:1 ~" # amp 0.33 # cutoff 2500
+  d6 $ every 4 (# speed 1.1) $ s "~ ~ ~ ~ ~ tabla:1 ~" # amp 0.09 # cutoff 2500
   d7 $ every 4 (# speed 1.1) $ s "techno:3 ~ techno:3 ~ ~ ~ techno:2" # amp 0.15
-  d8
-    $ fastcat [
-        n "[~ ~ c1 ~ a0 ~ d1 e0]" # s "moog" # cutoff 200 # release 0.267 # amp 0.19,
-        n "[c1 ~ ~ a0 ~ d1 ~ e0]" # s "moog" # cutoff 500 # release 0.285 # amp 0.38 # delay 1 # hpf 420]
-    # lpf 400
-  d9 $ s "arpy*8" # cutoff (rand * 500) # amp 0.06
+  -- d8
+  --   $ fastcat [
+  --       n "[~ ~ c1 ~ a0 ~ d1 e0]" # s "moog" # cutoff 200 # release 0.267 # amp 0.19,
+  --       n "[c1 ~ ~ a0 ~ d1 ~ e0]" # s "moog" # cutoff 500 # release 0.285 # amp 0.38 # delay 1 # hpf 420]
+  --   # lpf 400
+  -- d9 $ s "arpy*8" # cutoff (rand * 500) # amp 0.06
   d10
     $ cat fills1
     # cutoff 3500
     # amp 0.025
     # hpf 350
-  p 666 $ s "noise2*128" # legato 4 # lpf (slow 4 $ range 800 3000 sine) # amp 0.0026 # room 0.136 # hpf 373
+  p 666 $ s "noise2*128" # legato 4 # lpf (slow 4 $ range 800 3000 sine) # amp 0.0028 # room 0.136 # hpf 373
+
+unsolo 3
 
 do
   d1 $ silence
-  -- d2 $ silence
+  d2 $ silence
   -- d3 $ silence
-  -- d4 $ silence
+  d4 $ silence
   -- d5 $ silence
-  d6 $ silence
+  -- d6 $ silence
   -- d7 $ silence
   d8 $ silence
   d9 $ silence
-
-do
-  solo 1
-  solo 4
-  solo 5
-  solo 6
-  solo 666
-
-solo 6
-solo 7
-
-unsoloAll
-
-unmuteAll 
-
-hush

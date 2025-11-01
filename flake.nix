@@ -18,6 +18,8 @@
               haskellPackages.ghc
               haskellPackages.Cabal
               supercollider-with-sc3-plugins
+              python3
+              python3Packages.oscpy
             ];
           };
       });
