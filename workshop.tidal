@@ -1,0 +1,77 @@
+-- comment
+--
+-- this pattern will not play
+-- d1 $ s "bd hh sn hh"
+
+-- "fast 2" will be ignored
+
+d1
+  -- $ fast 2
+  $ s "hh*8"
+
+d1 $ sound "drum"
+
+d1 $ silence
+
+d1 $ sound "drum:1"
+
+d1 $ sound "drum" # n 12
+
+d1 $ sound "voodoo"
+
+d1 $ sound "bd hh sn hh"
+
+d1 $ sound "bd bd hh bd sn hh bd"
+
+setcps 0.6
+
+d1 $ sound "arpy cp arpy:2"
+d2 $ sound "bd sn:2 bd sn"
+
+hush
+
+-- Custom channel names using the p function
+-- This requires the proper BootTidal.hs setup
+--
+p "romeo" $ s "bd bd"
+p 452143521 $ s "bd bd"
+
+pString "drums" $ sound "bd sn:2 bd sn"
+p "melody" $ sound "arpy cp" # n "0 4 7 4"
+p "bass" $ sound "fm" # n "c2" # sustain 0.5
+
+-- You can still use the standard d1, d2, etc. channels
+-- They're actually aliases for p "1", p "2", etc.
+d2 $ sound "bd sn:2 ~ sn"
+-- Solo/unsolo works with both standard and custom channels
+solo 1
+solo "drums"
+unsolo 1
+unsolo "drums"
+
+hush
+
+-- More complex patterns
+d1 $ sound "bd ~ sn:3 bd sn:5 ~ bd:2 sn:2"
+
+d1 $ sound "bd [bd cp] bd bd"
+
+d1 $ sound "[[bd bd] bd sn:5] [bd sn:3]"
+
+d1 $ sound "[[bd [bd bd bd bd]] bd sn:5] [bd sn:3]"
+
+d1 $ sound "bd sd*2"
+
+d1 $ sound "bd [sd cp]*2"
+
+-- Using custom channels for different instruments
+p "drums" $ sound "[bd sn] cp" # gain 0.8
+p "hats" $ sound "hh*8" # gain 0.6
+p "bass" $ sound "fm*2" # n "c1 c2" # cutoff 400
+
+p "test" $ sound "bd sn:2 ~ sn"
+
+hush
+d1 $ sound "bd [sd cp]*2"
+
+hush

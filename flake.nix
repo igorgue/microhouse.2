@@ -10,19 +10,15 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            pipewire.jack
-            haskellPackages.ghc
-            cabal-install
-            haskellPackages.Cabal
-            haskellPackages.tidal
-            haskellPackages.tidal-link
-            supercollider
-            supercollider_scel
-            supercollider-with-plugins
-            supercollider-with-sc3-plugins
-          ];
-        };
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              zlib
+              pipewire.jack
+              cabal-install
+              haskellPackages.ghc
+              haskellPackages.Cabal
+              supercollider-with-sc3-plugins
+            ];
+          };
       });
 }
