@@ -35,7 +35,7 @@ do
         swing 3 $ s "hh*8" # amp 0.16]
   d3 $ cat clap1 # cutoff 1027 # amp 0.13 # room 0.5 # sz 0.90
   d4 $ s "~ linnhats:2 ~ linnhats:2 ~ linnhats:2 ~ linnhats:2" # amp 0.19 # release 0.168
-  d5 $ s "[~ shakers ~ shakers]*2 shakers:4*3" # amp 0.11 # gain 0.85 # pan (rand)
+  d5 $ s "[~ db:10 ~ db:10]*2 db:10*3" # amp 0.17 # gain 0.85 # pan (rand)
   d6 $ every 4 (# speed 1.1) $ s "~ ~ ~ ~ ~ tabla:1 ~" # amp 0.33 # cutoff 2500
   d7 $ every 4 (# speed 1.1) $ s "techno:3 ~ techno:3 ~ ~ ~ techno:2" # amp 0.15
   d8
