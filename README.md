@@ -38,6 +38,16 @@ Now you can write patterns in `hello.tidal` and they will automatically load whe
 - `start-tidal.sh` - Startup script for TidalCycles
 - `flake.nix` - Nix flake for reproducible environment
 
+## MIDI Setup
+
+To send MIDI from TidalCycles to external software (like Bitwig):
+
+```vim
+:lua dofile('setup-tidal-midi.lua').setup()
+```
+
+See [MIDI-SETUP.md](MIDI-SETUP.md) for detailed instructions.
+
 ## Common Issues
 
 If you get module errors, make sure you're running TidalCycles through the nix-shell environment as shown above.

@@ -1,0 +1,50 @@
+setcps(110/60/4)
+
+resetCycles
+
+unsolo 1
+
+do
+  d1 $ s "bd bd bd bd" # amp 0.22 # release 0.09 # lpf 800 # resonance 0.02
+  d2 $ s "~ cp ~ cp" # amp 0.04
+  d3 $ s "~ linnhats:4 ~ linnhats:4 ~ linnhats:4 ~ linnhats:4" # amp 0.06 # release 0.376 # room 0.1 # sz 0.9
+  d4 $ swing 0.09 $ s "hh*16" # amp 0.06 # release 0.028 # room 0.1 # sz 0.9
+  d5 $ s "rs ~ ~ rs ~ rs ~ rs ~ rs rs ~ ~" # amp 0.041
+  -- d1 $ silence
+  -- d2 $ silence
+  -- d3 $ silence
+
+do
+  let rs = [
+        "rs ~ ~ rs rs ~ rs ~ ~ rs ~ rs ~ ~",
+        "rs ~ ~ rs ~ rs ~ rs ~ rs rs ~ ~"]
+  d1 $ s "bd bd bd bd" # amp 0.22 # release 0.09 # lpf 800 # resonance 0.02
+  d2 $ silence
+  d3 $ s "~ [linnhats:4*2] ~ linnhats:4 ~ linnhats:4 ~ linnhats:4" # amp 0.06 # release 0.376 # room 0.1 # sz 0.9
+  d4 $ silence
+  d5 $ cat rs # amp 0.041
+
+solo 6
+
+  -- Patterns that can be sent to Bitwig via MIDI bridges
+
+  -- Simple melody pattern
+  -- d5 $ note "c4 e4 g4 c5" # sustain 0.5
+
+  -- Bass pattern
+  -- d6 $ note "c2 g2 c3 g3" # sustain 1.0
+
+  -- Drum pattern (using different sounds for different MIDI notes)
+  -- d7 $ s "bd sn hc cp" # sustain 0.1
+
+  -- More complex melodic pattern
+  -- d8 $ note "<c4 e4 g4> <d4 f4 a4> <e4 g4 b4>" # sustain 0.4
+
+  -- Arpeggio pattern
+  -- d9 $ note "c4 e4 g4 c5 e4 g4 c5 e4" # sustain 0.2
+
+  -- Combine with audio
+  -- d10 $ stack [
+  --   note "c4 e4 g4" # sustain 0.5,
+  --   s "bd" # amp 0.3
+  -- ]

@@ -1,50 +1,46 @@
-setcps(110/60/4)
+-- MIDI devices found from MIDIClient.init:
+-- 	MIDIEndPoint("Midi Through", "Midi Through Port-0")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-0", "VirMIDI 4-0")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-1", "VirMIDI 4-1")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-2", "VirMIDI 4-2")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-3", "VirMIDI 4-3")
+-- 	MIDIEndPoint("SuperCollider", "out0")
+-- 	MIDIEndPoint("SuperCollider", "out1")
+-- 	MIDIEndPoint("SuperCollider", "out2")
+-- 	MIDIEndPoint("SuperCollider", "out3")
+-- 	MIDIEndPoint("SuperCollider", "out4")
+-- MIDI Destinations:
+-- 	MIDIEndPoint("Midi Through", "Midi Through Port-0")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-0", "VirMIDI 4-0")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-1", "VirMIDI 4-1")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-2", "VirMIDI 4-2")
+-- 	MIDIEndPoint("Virtual Raw MIDI 4-3", "VirMIDI 4-3")
+-- 	MIDIEndPoint("SuperCollider", "in0")
+-- 	MIDIEndPoint("SuperCollider", "in1")
+-- 	MIDIEndPoint("SuperCollider", "in2")
+-- 	MIDIEndPoint("SuperCollider", "in3")
+-- 	MIDIEndPoint("SuperCollider", "in4")
+-- 	MIDIEndPoint("SuperCollider", "in5")
+-- 	MIDIEndPoint("SuperCollider", "in6")
+-- -> MIDIClient
 
-resetCycles
+-- Initialize MIDI connection for VirMIDI 4-0 (same as SonicPi)
+-- 
+-- SETUP STEPS:
+-- 1. Run: :lua dofile('setup-tidal-midi.lua').setup()
+-- 
+-- OR manually:
+-- 1. Run: ./setup-tidal-midi.sh (to connect ALSA MIDI routing)
+-- 2. Run this Lua command in Neovim to initialize SuperCollider:
+--    :lua require('tidal.core.message').sclang.send_line('(MIDIClient.init; ~midiOut = MIDIOut.newByName("Virtual Raw MIDI 4-0", "VirMIDI 4-0"); ~midiOut.latency = 0.0; ~dirt.soundLibrary.addMIDI(\\\\\\\\mydevice, ~midiOut);)')
+-- 
+-- Port mapping:
+-- - MIDIOut.newByName targets VirMIDI 4-0 directly
+-- - SuperCollider out0 (128:16) -> VirMIDI 4-0 (32:0) -> Bitwig
 
-unsolo 1
+setcps (130/60/4)
 
-do
-  d1 $ s "bd bd bd bd" # amp 0.22 # release 0.09 # lpf 800 # resonance 0.02
-  d2 $ s "~ cp ~ cp" # amp 0.04
-  d3 $ s "~ linnhats:4 ~ linnhats:4 ~ linnhats:4 ~ linnhats:4" # amp 0.06 # release 0.376 # room 0.1 # sz 0.9
-  d4 $ swing 0.09 $ s "hh*16" # amp 0.06 # release 0.028 # room 0.1 # sz 0.9
-  d5 $ s "~ rs ~ rs rs ~ ~ rs ~ ~ rs ~ rs ~" # amp 0.041
-  -- d1 $ silence
-  -- d2 $ silence
-  -- d3 $ silence
+d1 $ n "c2 c2 [~ c2] c2*3" # s "mydevice" # midichan 1
+d2 $ n "c3 c2 ~ c3 c4 c3 c2" # s "mydevice" # midichan 2
 
-do
-  let rs = [
-          "~ rs ~ ~ rs ~ ~ rs ~ ~ rs ~ rs ~",
-          "~ rs ~ rs rs ~ ~ rs ~ ~ rs ~ rs ~"]
-  d1 $ s "bd bd bd bd" # amp 0.22 # release 0.09 # lpf 800 # resonance 0.02
-  d2 $ silence
-  d3 $ s "~ [linnhats:4*2] ~ linnhats:4 ~ linnhats:4 ~ linnhats:4" # amp 0.06 # release 0.376 # room 0.1 # sz 0.9
-  d4 $ silence
-  d5 $ cat rs # amp 0.041
-
-solo 6
-
-  -- Patterns that can be sent to Bitwig via MIDI bridges
-
-  -- Simple melody pattern
-  -- d5 $ note "c4 e4 g4 c5" # sustain 0.5
-
-  -- Bass pattern
-  -- d6 $ note "c2 g2 c3 g3" # sustain 1.0
-
-  -- Drum pattern (using different sounds for different MIDI notes)
-  -- d7 $ s "bd sn hc cp" # sustain 0.1
-
-  -- More complex melodic pattern
-  -- d8 $ note "<c4 e4 g4> <d4 f4 a4> <e4 g4 b4>" # sustain 0.4
-
-  -- Arpeggio pattern
-  -- d9 $ note "c4 e4 g4 c5 e4 g4 c5 e4" # sustain 0.2
-
-  -- Combine with audio
-  -- d10 $ stack [
-  --   note "c4 e4 g4" # sustain 0.5,
-  --   s "bd" # amp 0.3
-  -- ]
+hush

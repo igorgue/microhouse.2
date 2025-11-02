@@ -1,0 +1,54 @@
+-- Converted from Strudel code
+-- Original uses 'crate' samples from github:eddyflux/crate
+-- You'll need to load these samples or substitute with your own
+
+setcps(0.75)
+
+-- Main pattern
+do
+  let bbm9 = ["bf3", "df4", "f4", "af4", "c5"] -- Bbm9 chord
+      fm9 = ["f3", "af3", "c4", "ef4", "g4"]   -- Fm9 chord
+      chords = "[bf3'min9 f3'min9]/4"
+  -- DRUMS (from crate bank)
+  d1
+    $ mask "<[0 1] 1 1 1>/16"
+    $ stack [
+      -- kick: x*<1 2> [~@3 x] on beats, with variation
+      struct "<[t*<1 2> [~@3 t]] t>" $ s "crate-bd",
+      -- rim and snare
+      s "~ [crate-rim, crate-sd:<2 3>]" # room "<0 0.2>",
+      -- hihats
+      n "[0 <1 3>]*<2!3 4>" # s "crate-hh",
+      -- ride with mask
+      mask "<0 0 1 1>/16" $ s "crate-rd:<1!3 2>*2" # gain 0.5
+    ]
+  -- CHORDS (piano with phaser and reverb)
+  d2
+    $ s "gm_epiano1:1"
+    # n (chord "<bf3'min9 f3'min9>/4")
+    # phaser 4
+    # room 0.5
+    # size 4
+  -- BASS MELODY
+  d3
+    $ n ("<0!3 [1 1]>" + chord "<bf2'min9 f2'min9>/4")
+    # s "gm_acoustic_bass"
+    # size 4
+  -- MELODIC PATTERN (with effects)
+  d4
+    $ mask "<0 1 1 0>/16"
+    $ gain (range 0.6 0.9 $ perlin)
+    -- $ sometimes (ply 2) -- rarely equivalent
+    $ chunk 4 (fast 2)
+    $ segment 4
+    $ s "superpiano"
+    # n ("[0 <4 3 <2 5>>*2]" + chord "<bf4'min9 f4'min9>/4")
+    # room 0.75
+    # shape 0.3
+    # delay 0.25
+    # lpf (range 500 1000 $ slow 8 sine)
+    # lpq 5
+    # size 4
+
+-- Alternative bass using root notes:
+-- d3 $ n "<0!3 [1 1]>" + n "<bf2 f2>/4" # s "gm_acoustic_bass"
