@@ -1,46 +1,6 @@
--- MIDI devices found from MIDIClient.init:
--- 	MIDIEndPoint("Midi Through", "Midi Through Port-0")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-0", "VirMIDI 4-0")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-1", "VirMIDI 4-1")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-2", "VirMIDI 4-2")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-3", "VirMIDI 4-3")
--- 	MIDIEndPoint("SuperCollider", "out0")
--- 	MIDIEndPoint("SuperCollider", "out1")
--- 	MIDIEndPoint("SuperCollider", "out2")
--- 	MIDIEndPoint("SuperCollider", "out3")
--- 	MIDIEndPoint("SuperCollider", "out4")
--- MIDI Destinations:
--- 	MIDIEndPoint("Midi Through", "Midi Through Port-0")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-0", "VirMIDI 4-0")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-1", "VirMIDI 4-1")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-2", "VirMIDI 4-2")
--- 	MIDIEndPoint("Virtual Raw MIDI 4-3", "VirMIDI 4-3")
--- 	MIDIEndPoint("SuperCollider", "in0")
--- 	MIDIEndPoint("SuperCollider", "in1")
--- 	MIDIEndPoint("SuperCollider", "in2")
--- 	MIDIEndPoint("SuperCollider", "in3")
--- 	MIDIEndPoint("SuperCollider", "in4")
--- 	MIDIEndPoint("SuperCollider", "in5")
--- 	MIDIEndPoint("SuperCollider", "in6")
--- -> MIDIClient
-
--- Initialize MIDI connection for VirMIDI 4-0 (same as SonicPi)
--- 
--- SETUP STEPS:
--- 1. Run: :lua dofile('setup-tidal-midi.lua').setup()
--- 
--- OR manually:
--- 1. Run: ./setup-tidal-midi.sh (to connect ALSA MIDI routing)
--- 2. Run this Lua command in Neovim to initialize SuperCollider:
---    :lua require('tidal.core.message').sclang.send_line('(MIDIClient.init; ~midiOut = MIDIOut.newByName("Virtual Raw MIDI 4-0", "VirMIDI 4-0"); ~midiOut.latency = 0.0; ~dirt.soundLibrary.addMIDI(\\\\\\\\mydevice, ~midiOut);)')
--- 
--- Port mapping:
--- - MIDIOut.newByName targets VirMIDI 4-0 directly
--- - SuperCollider out0 (128:16) -> VirMIDI 4-0 (32:0) -> Bitwig
-
 setcps (130/60/4)
 
-d1 $ n "c2 c2 [~ c2] c2*3" # s "mydevice" # midichan 1
-d2 $ n "c3 c2 ~ c3 c4 c3 c2" # s "mydevice" # midichan 2
+d1 $ n "c3 ~ ~ c3 c3 ~ c3 ~" # s "midi" # midichan 0
+d2 $ n "c3 c2 ~ c3 c4 c3 c2" # s "midi" # midichan 1
 
 hush
