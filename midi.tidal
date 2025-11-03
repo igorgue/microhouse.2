@@ -1,6 +1,6 @@
 setcps (130/60/4)
 
 d1 $ n "c3 ~ ~ c3 c3 ~ c3 ~" # s "midi" # midichan 0
-d2 $ n "c3 c2 ~ c3 c4 c3 c2" # s "midi" # midichan 1
+d2 $ n "c3 a2 ~ c3 c4 c3 c2" # s "midi" # midichan 1
 
 hush
